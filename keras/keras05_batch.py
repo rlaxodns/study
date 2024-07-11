@@ -44,7 +44,7 @@ model.add(Dense(1))
 # 오차값은 0.0008735790033824742
 # 예측값은 [[5.9950857]]
 
-#2.모델구성
+#3. 컴파일 및 훈련
 epochs=100
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs,
@@ -56,7 +56,7 @@ model.fit(x,y,epochs=epochs,
 # epocs 80
 # 오차값은 0.33119288086891174
 
-#3. 컴파일, 훈련
+#4. 예측 및 출력
 loss=model.evaluate(x,y)
 result=model.predict(np.array([7]))
 

@@ -10,12 +10,12 @@ y=np.array([1,2,4,3,5])
 model=Sequential()
 model.add(Dense(1,input_dim=1))
 
-#2. 실습
+#3. 훈련
 epochs=20
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs)
 
-#3. 컴파일, 훈련
+#4. 예측
 loss=model.evaluate(x,y)
 result=model.predict(np.array([6]))
 

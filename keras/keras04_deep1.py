@@ -35,12 +35,12 @@ model.add(Dense(1,input_dim=2))
 # 오차값은 0.0008735790033824742
 # 예측값은 [[5.9950857]]
 
-#2. 실습
+#3. 컴파일
 epochs=100
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs)
 
-#3. 컴파일, 훈련
+#4. 예측
 loss=model.evaluate(x,y)
 result=model.predict(np.array([6]))
 
