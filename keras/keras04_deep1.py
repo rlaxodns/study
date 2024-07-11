@@ -4,14 +4,39 @@ import numpy as np
 
 #1. 데이터
 x=np.array([1,2,3,4,5])
-y=np.array([1,2,4,3,5])
+y=np.array([1,2,3,4,5])
 
-#2. 모델구성
+#[실습] 레이어의 깊이와 노드의 갯수를 이용해서 [6]을 만들기
+# 에포는 100으로 고정
+# 소수 넷째자리까지 맞추면 합격 예) 6.0000 OR 5.9999 
+
+#2. 모델구성 # 딥러닝으로 구현
 model=Sequential()
-model.add(Dense(1,input_dim=1))
+model.add(Dense(4000,input_dim=1)) #Dense(1(output_node), input_dim=1(input_node))
+model.add(Dense(2000,input_dim=4000)) # 히든레이어의 모양을 어떻게 만드는것은 전혀 상관없지만
+model.add(Dense(999,input_dim=2000)) # in-out은 숫자를 맞출것
+model.add(Dense(900,input_dim=999))  
+model.add(Dense(500,input_dim=900))
+model.add(Dense(200,input_dim=500))
+model.add(Dense(100,input_dim=200))
+model.add(Dense(75,input_dim=100))
+model.add(Dense(32,input_dim=75))
+model.add(Dense(16,input_dim=32))
+model.add(Dense(8,input_dim=16))
+model.add(Dense(2,input_dim=4))
+model.add(Dense(1,input_dim=2))
+
+# =================
+# epocs 100
+# 오차값은 0.00010343971371185035
+# 예측값은 [[5.9904633]]
+# =================
+# epocs 100
+# 오차값은 0.0008735790033824742
+# 예측값은 [[5.9950857]]
 
 #2. 실습
-epochs=20
+epochs=100
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs)
 

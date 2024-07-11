@@ -3,21 +3,52 @@ from tensorflow.keras.layers import Dense
 import numpy as np
 
 #1. 데이터
-x=np.array([1,2,3,4,5])
-y=np.array([1,2,4,3,5])
+x=np.array([1,2,3,4,5,6])
+y=np.array([1,2,3,5,4,6])
 
-#2. 모델구성
+#[실습] 레이어의 깊이와 노드의 갯수를 이용해서 최소의 LOSS를 만들기
+# 에포는 100으로 고정
+# 소수 넷째자리까지 맞추면 합격 0.33이하
+
+#2. 모델구성 # 딥러닝으로 구현
 model=Sequential()
-model.add(Dense(1,input_dim=1))
+model.add(Dense(2000,input_dim=1)) #Dense(1(output_node), input_dim=1(input_node))
+model.add(Dense(1000)) # 히든레이어의 모양을 어떻게 만드는것은 전혀 상관없지만
+model.add(Dense(500)) # in-out은 숫자를 맞출것
+model.add(Dense(400))  
+model.add(Dense(300))
+model.add(Dense(200))
+model.add(Dense(100))
+model.add(Dense(1))
+
+
+
+# epocs 100
+# 오차값은 0.3254151940345764
+# 예측값은 [[6.8809524]]
+# =================
+# epocs 100
+# 오차값은 0.32392069697380066
+# 예측값은 [[6.823294]]
+
+
+# =================
+# epocs 100
+# 오차값은 0.00010343971371185035
+# 예측값은 [[5.9904633]]
+# =================
+# epocs 100
+# 오차값은 0.0008735790033824742
+# 예측값은 [[5.9950857]]
 
 #2. 실습
-epochs=20
+epochs=100
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs)
 
 #3. 컴파일, 훈련
 loss=model.evaluate(x,y)
-result=model.predict(np.array([6]))
+result=model.predict(np.array([7]))
 
 print("=================")
 print("epocs", epochs)
