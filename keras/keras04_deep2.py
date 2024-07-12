@@ -13,8 +13,8 @@ y=np.array([1,2,3,5,4,6])
 #2. 모델구성 # 딥러닝으로 구현
 model=Sequential()
 model.add(Dense(2000,input_dim=1)) #Dense(1(output_node), input_dim=1(input_node))
-model.add(Dense(1000)) # 히든레이어의 모양을 어떻게 만드는것은 전혀 상관없지만
-model.add(Dense(500)) # in-out은 숫자를 맞출것
+model.add(Dense(1000))             # 히든레이어의 모양을 어떻게 만드는것은 전혀 상관없지만
+model.add(Dense(500))              # in-out은 숫자를 맞출것
 model.add(Dense(400))  
 model.add(Dense(300))
 model.add(Dense(200))
