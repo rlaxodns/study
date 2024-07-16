@@ -27,7 +27,7 @@ model.fit(x, y, epochs=1000, batch_size=1) # 행에 따라서 batch_size 조절
 
 # 4 평가 예측
 loss = model.evaluate(x, y)
-results = model.predict([[6,11]])
+results = model.predict([[6,11]])  # x의 값으로 [[6,11]]인 경우 y의 예측값은?
 
 print("로스 :", loss)
 print("x를 통한 y의 예측값 :", results)

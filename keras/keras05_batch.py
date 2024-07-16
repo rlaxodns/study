@@ -49,7 +49,7 @@ epochs=100
 model.compile(loss='mse', optimizer='adam')
 model.fit(x,y,epochs=epochs,
            batch_size=3)
-#batch_size=훈련시킬 데이터의 숫자 의미
+#batch_size = 훈련시킬 데이터의 크기를 의미
 #batch size 기본값은=32
 
 # =================

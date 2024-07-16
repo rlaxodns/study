@@ -6,7 +6,7 @@ from tensorflow.keras.layers import Dense
 x = np.array([[1,2,3,4,5],
               [6,7,8,9,10]])
 
-x1 = np.transpose(x)
+x1 = np.transpose(x)   #x의 행렬의 형태가 y와 맞지 않기 때문에, 행과 열을 치환
 print(x)
 # [[ 1  2  3  4  5]
 #  [ 6  7  8  9 10]]
