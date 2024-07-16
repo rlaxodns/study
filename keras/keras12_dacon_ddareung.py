@@ -121,7 +121,7 @@ model.add(Dense(1))
 
 #3. 컴파일 및 훈련
 model.compile(loss='mse', optimizer = 'adam')
-model.fit(x_train, y_train, epochs=10000, batch_size=4)
+model.fit(x_train, y_train, epochs=10000, batch_size=16)
 
 #4. 평가 및 예측
 loss = model.evaluate(x_test, y_test)
