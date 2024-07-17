@@ -9,9 +9,14 @@ print(sk.__version__)  #0.24.2
 from sklearn.datasets import load_boston
 dataset = load_boston() 
 # print(dataset.shape)
+print(dataset.DESCR)  # sklearn에서 .describe()와 동일한 데이터의 평균 등을 설명하는 함수
+print(dataset.feature_names)  #['CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO'
+                              #   'B' 'LSTAT']
+
 
 x = dataset.data
 y = dataset.target  #x와 y를 데이터 상에서 분리
+
 
 print(x.shape) #(506, 13)
 print(y.shape) #(506,)
