@@ -65,6 +65,8 @@ print(train_csv.info())
 print(train_csv.isna().sum()) # 각 컬럼의 데이터 결측치의 수 확인 방법
 
 train_csv = train_csv.dropna() #데이터 내의 na값을 제외한다.
+# 결측치가 있는 인덱스를 dropna()하면 행자체가 삭제됨
+
 print(train_csv.isna().sum())
 print(train_csv.info())
 print(train_csv) #[1328 rows x 10 columns]
@@ -86,7 +88,7 @@ print(test_csv.isna().sum())  # 테스트 데이터의 결측치를 제거하는
 # 그래서 임의의 값을 대입하는데 "평균치"를 통해서 대입할 수도 있다.
 
 test_csv = test_csv.fillna(test_csv.mean())  # .fillna  : 결측치를 채우는 함수
-                                             # 평균값을 채우는 경우에는 컬럼의 평균값을 채워야 한다.
+                                             # .mean() 각 컬럼의 평균값을 채워진다.
 print(test_csv.info())
 """---  ------                  --------------  -----
  0   hour                    715 non-null    int64
@@ -100,7 +102,7 @@ print(test_csv.info())
  8   hour_bef_pm2.5          715 non-null    float64"""
 
 
-#####################################################################지금까지 데이터 전처리 과정
+#############지금까지 데이터 전처리 과정#################################################
 
 x = train_csv.drop(['count'], axis=1)  # axis=0은 행의 [---]이름의 행 삭제, axis=1는 열의 [---]이름의 열 삭제
 print(x) #[1328 rows x 9 columns]
@@ -121,7 +123,7 @@ model.add(Dense(1))
 
 #3. 컴파일 및 훈련
 model.compile(loss='mse', optimizer = 'adam')
-model.fit(x_train, y_train, epochs=10000, batch_size=16)
+model.fit(x_train, y_train, epochs=100, batch_size=16)
 
 #4. 평가 및 예측
 loss = model.evaluate(x_test, y_test)
@@ -171,6 +173,7 @@ epochs=1500
 loss 2557.16357421875
 r2 0.6022284477446165
 """
+
 
 ##submission.csv 만들기 // count컬럼 값만 넣어주면 됨
 submission_csv['count'] = y_submit
