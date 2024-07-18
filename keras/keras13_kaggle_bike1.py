@@ -1,4 +1,6 @@
 # https://www.kaggle.com/competitions/bike-sharing-demand/data?select=train.csv
+# 현재는 결측치만 확인하고 있으나 추후 이상치 또한 확인해야함
+# 
 
 import pandas as pd
 import numpy as np
@@ -64,7 +66,7 @@ model.add(Dense(1, activation = 'linear'))
 
 #3. 컴파일 및 훈련
 model.compile(loss = 'mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=1000, batch_size=13)
+model.fit(x_train, y_train, epochs=10, batch_size=13)
 
 #4. 평가 및 예측
 loss = model.evaluate(x_test, y_test)
