@@ -13,6 +13,11 @@ train_csv = pd.read_csv('C:\\ai5\\_data\\bike-sharing-demand\\train.csv', index_
 test_csv = pd.read_csv('C:\\ai5\\_data\\bike-sharing-demand\\test.csv', index_col=0)
 sample_csv = pd.read_csv('C:\\ai5\_data\\bike-sharing-demand\\sampleSubmission.csv', index_col=0)
 
+######결측치 확인#############
+print(train_csv.isna().sum())
+print(test_csv.isna().sum())
+print(sample_csv.isna().sum())
+
 ##1. x와 y의 분리
 x = train_csv.drop(['casual', 'registered', 'count'], axis=1)
 y = train_csv[['casual', 'registered']]
