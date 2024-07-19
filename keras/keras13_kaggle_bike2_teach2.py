@@ -1,3 +1,4 @@
+
 # x의 공백을 예측하여, 해당 예측치를 가지고 y의 값을 예측
 
 import pandas as pd
