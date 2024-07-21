@@ -50,17 +50,18 @@ print(x.shape) #(10886, 8)
 
 y = train_csv['count']
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.1, random_state=4243)
+x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.3, random_state=9999)
 
 #2. 모델
 model = Sequential()
-model.add(Dense(100, activation = 'relu', input_dim = 8))
+model.add(Dense(1000, activation = 'relu', input_dim = 8))
  # activation function(활성화 함수)을 통해서 
  # 음수를 배제할 수 있음, relu: 양수는 그대로, 음수는 0으로 
-model.add(Dense(90, activation = 'relu'))
-model.add(Dense(80, activation = 'relu'))
-model.add(Dense(70, activation = 'relu'))
-model.add(Dense(60, activation = 'relu'))
+model.add(Dense(900, activation = 'relu'))
+model.add(Dense(800, activation = 'relu'))
+model.add(Dense(470, activation = 'relu'))
+model.add(Dense(260, activation = 'relu'))
+model.add(Dense(150, activation = 'relu'))
 model.add(Dense(50, activation = 'relu'))
 model.add(Dense(1, activation = 'linear'))
 
@@ -70,14 +71,14 @@ from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(
     monitor = 'val_loss',
     mode = 'min',
-    patience = 100,
+    patience = 20,
     restore_best_weights = True
 )
 
 model.compile(loss = 'mse', optimizer='adam')
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=10000, batch_size=32,
-                 validation_split=0.2, verbose =2, callbacks = [es])
+hist = model.fit(x_train, y_train, epochs=1, batch_size=1,
+                 validation_split=0.35, verbose =2, callbacks = [es])
 end_time = time.time()
 
 #4. 평가 및 예측

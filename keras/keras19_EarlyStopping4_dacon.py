@@ -105,7 +105,8 @@ print(test_csv.info())
 
 #############지금까지 데이터 전처리 과정#################################################
 
-x = train_csv.drop(['count'], axis=1)  # axis=0은 행의 [---]이름의 행 삭제, axis=1는 열의 [---]이름의 열 삭제
+x = train_csv.drop(['count'], axis=1)  # axis=0은 행의 [---]이름의 행 삭제, 
+# axis=1는 열의 [---]이름의 열 삭제
 print(x) #[1328 rows x 9 columns]
 
 y = train_csv['count'] #y는 카운트 열만 지정
@@ -117,9 +118,13 @@ print(x_train.shape) # (929, 9)
 
 #2. 모델 구성
 model = Sequential()
-model.add(Dense(100, input_dim=9))
-model.add(Dense(100))
-model.add(Dense(100))
+model.add(Dense(1000, input_dim=9))
+model.add(Dense(500))
+model.add(Dense(250))
+model.add(Dense(125))
+model.add(Dense(60))
+model.add(Dense(30))
+model.add(Dense(10))
 model.add(Dense(1))
 
 #3. 컴파일 및 훈련
@@ -128,13 +133,13 @@ from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(
     monitor = 'val_loss',
     mode = 'min',
-    patience = 10,
+    patience = 50,
     restore_best_weights = True
 )
 
 model.compile(loss='mse', optimizer = 'adam')
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=1000, batch_size=16,
+hist = model.fit(x_train, y_train, epochs=1000, batch_size=1,
                  validation_split = 0.2, callbacks = [es])
 end_time = time.time()
 
