@@ -81,7 +81,7 @@ plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['loss'], c='yellow', label = 'loss') # x값이 지정되지 않은 경우에는 x는 시간 순에 따름
 #괄호 안에 marker = '.'을 넣으면 에포지점에 점으로 표시해줌
-#laber = 그래프의 이름을 loss라고 지정
+#label = 그래프의 이름을 loss라고 지정
 # + val_loss 도 추가해보기
 plt.plot(hist.history['val_loss'], c='green', label = 'val_loss')
 plt.legend(loc='upper right') # label 값이 무엇인지 표현

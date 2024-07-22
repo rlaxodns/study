@@ -78,7 +78,7 @@ es = EarlyStopping(
 model.compile(loss = 'mse', optimizer='adam')
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1, batch_size=1,
-                 validation_split=0.35, verbose =2, callbacks = [es])
+                 validation_split=0.2, verbose =2, callbacks = [es])
 end_time = time.time()
 
 #4. 평가 및 예측

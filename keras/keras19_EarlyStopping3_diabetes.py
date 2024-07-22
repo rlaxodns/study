@@ -61,7 +61,7 @@ epochs=500, batch_size=1
 
 2251.953857421875
 0.6241022268402279
-# """
+"""
 
 # 시각화
 import matplotlib.pyplot as plt
