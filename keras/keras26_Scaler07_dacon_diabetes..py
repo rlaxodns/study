@@ -24,7 +24,17 @@ y = train['Outcome']
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, 
                                                    shuffle=True, random_state=4343)
-print(pd.DataFrame(x).value_counts)
+# print(pd.DataFrame(x).value_counts)
+
+###스케일링 적용####
+from sklearn.preprocessing import MinMaxScaler,StandardScaler, MaxAbsScaler, RobustScaler
+mms = MinMaxScaler()
+std = StandardScaler()
+mas = MaxAbsScaler()
+rbs = RobustScaler()
+
+x_train = mms.fit_transform(x_train)
+x_test = mms.transform(x_test)
 
 
 #2. 모델 구성
@@ -73,5 +83,12 @@ submission.to_csv("C:\\ai5\\_data\\dacon\\diabetes\\sample_submission1555.csv")
 0.6946564885496184
 
 [0.5346061587333679, 0.7633587718009949]
+0.7633587786259542
+
+<적용 후>
+[0.4714379608631134, 0.7786259651184082]
+0.7786259541984732
+
+[0.5277946591377258, 0.7633587718009949]
 0.7633587786259542
 """

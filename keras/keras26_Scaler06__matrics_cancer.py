@@ -71,6 +71,18 @@ print(pd.value_counts(y))
 print(x_train.shape, y_train.shape) #(398, 30) (398,)
 print(x_test.shape, y_test.shape) #(171, 30) (171,)
 
+####스케일링 적용#####
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
+mms = MinMaxScaler()
+std = StandardScaler()
+mas = MaxAbsScaler()
+rbs = RobustScaler()
+
+x_train = std.fit_transform(x_train)
+x_test = std.transform(x_test)
+####################
+
+
 
 #2. 모델
 model = Sequential() 
@@ -151,4 +163,15 @@ acc_score 0.9122807017543859
 로스: 0.2512463927268982
 ACC: 0.9210526347160339
 acc_score 0.9210526315789473
+
+
+<스케일링 적용>
+로스: 0.037650082260370255
+ACC: 0.9912280440330505
+acc_score 0.9912280701754386
+
+로스: 0.1361871361732483
+ACC: 0.9473684430122375
+acc_score 0.9473684210526315
+
 """

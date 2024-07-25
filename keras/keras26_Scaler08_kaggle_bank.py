@@ -66,14 +66,20 @@ test['Gender'] = le.fit_transform(test['Gender'])
 x = train.drop(['Exited'], axis = 1)
 y = train['Exited']
 
-from sklearn.preprocessing import MinMaxScaler
-scalar=MinMaxScaler()
-x[:] = scalar.fit_transform(x[:])
-
 print(x.shape, y.shape) #(165034, 10) (165034,)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, 
                                                     random_state= 6666)
+
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
+mms = MinMaxScaler()
+std = StandardScaler()
+mas = MaxAbsScaler()
+rbs = RobustScaler()
+
+x_train = rbs.fit_transform(x_train)
+x_test = rbs.transform(x_test)
+
 
 #2. 모델 구성
 model = Sequential()
@@ -94,7 +100,7 @@ es = EarlyStopping(
     restore_best_weights=True
 )
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics=['acc'])
-model.fit(x_train, y_train, epochs = 300, batch_size=32,
+model.fit(x_train, y_train, epochs = 100, batch_size=1024,
           validation_split=0.3, callbacks=[es])
 # validation은 훈련에 있어서 미미하게 영향을 미친다
 
@@ -105,6 +111,11 @@ result = np.round(model.predict([test]))
 
 acc = accuracy_score(y_test, y_pre)
 
+print(loss, acc)
 
 submission['Exited'] = result
 submission.to_csv("C:\\ai5\\_data\\kaggle\\bank\\sample_submission_153311.csv")
+
+# [0.3274446725845337, 0.8632714152336121] 0.8632714272730027
+# [0.32849907875061035, 0.8626654744148254] 0.8626654951979883
+# [0.3284316956996918, 0.8633320331573486] 0.8633320204805042
