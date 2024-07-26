@@ -1,7 +1,9 @@
 # 26-1 copy
-# 28-2 copy
 
-from tensorflow.keras.models import Sequential, load_model # 모델을 불러오는 라이브러리
+# 훈련하는 중에서 가중치가 갱신되는 내용을 지속적으로 저장할 수 있는 기능
+# Early Stopping과 유사한 기능
+
+from tensorflow.keras.models import Sequential, load_model
 from keras.layers import Dense
 import sklearn as sk
 print(sk.__version__)  #0.24.2
@@ -16,11 +18,10 @@ import numpy as np
 dataset = load_boston() 
 # print(dataset.shape)
 print(dataset.DESCR)  # sklearn에서 .describe()와 동일한 데이터의 평균 등을 설명하는 함수
-print(dataset.feature_names)  #['CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO'
-                              #   'B' 'LSTAT']
+print(dataset.feature_names)  
 
 x = dataset.data
-y = dataset.target  #x와 y를 데이터 상에서 분리
+y = dataset.target
 # print(x.shape) #(506, 13)
 # print(y.shape) #(506,)
 
@@ -38,24 +39,23 @@ x_train = rbs.fit_transform(x_train)
 x_test = rbs.transform(x_test) 
 
 
-model = load_model(".//_save//keras28//keras28_3_save_model.h5") 
-#3. 컴파일 훈련) 이후에 저장된 내용을 불러오면 가중치까지도 불러올 수 있다.
-# 가중치가 고정되어 있기 때문에 결과값이 변경될 일이 없음
 
-# 전이학습) 위에서 다른 데이터를 통해서 학습시킨 내용을 가지고 전혀 다른 내용의 
-# 데이터를 학습시켜 고도화하는 방법
 
-model.summary()
+model = load_model("C:\\ai5\\_save\\keras29\\keras29_mcp1.hdf5")
+# from keras.model import load_model의 라이브러리가 필요하다 
+# 이에 대한 효과는 모델을 저장한 것과 같은 효과가 있다
+
+
+
 
 #4. 예측 및 평가
 loss = model.evaluate(x_test, y_test)
 y_predict = model.predict(x_test)
 result = model.predict([x])
-
-
 r2 = r2_score(y_test, y_predict)
 
-# print("훈련시간", round(end_time-start_time, 2), "초")
 print("오차값", loss)
 print("결정계수", r2)
 
+# 오차값 22.29594612121582
+# 결정계수 0.6701661973511581
