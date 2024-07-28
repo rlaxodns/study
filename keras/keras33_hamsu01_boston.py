@@ -52,9 +52,72 @@ x_train = mms.fit_transform(x_train)
 x_test = mms.transform(x_test) 
 
 
-# 모델 불러오기
-from keras.models import load_model
-model = load_model(".\\_save\\mcp2\\keras30_0729_1307_0151-12.3255.hdf5")
+#2. 모델
+from keras.models import Model
+from keras.layers import Dropout, Input
+# input_shape = (13,)
+input1 = Input(shape=(13,))
+dense1 = Dense(100)(input1)
+drop1 = Dropout(0.2)(dense1)
+dense2 = Dense(100)(drop1)
+drop2 = Dropout(0.1)(dense2)
+dense3 = Dense(100)(drop2)
+output1 = Dense(1)(dense3)
+
+model = Model(inputs = input1, outputs = output1)
+
+model.summary()
+
+#3. 컴파일 및 훈련
+model.compile(loss = 'mse', optimizer='adam')
+
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+# 훈련하는 중에서 가중치가 갱신되는 내용을 지속적으로 저장할 수 있는 기능
+# Early Stopping과 유사한 기능
+
+es = EarlyStopping(
+    monitor='val_loss',
+    mode ='min',
+    patience=50, 
+    verbose = 1, # Restoring model weights from the end of the best epoch: 112
+    restore_best_weights=True
+)
+
+
+
+####자동으로 mcp파일 세이브 만들기####
+import datetime
+date = datetime.datetime.now() 
+date = date.strftime("%m%d_%H%M") # 시간을 문자열로 바꾸어주는 함수 0726_1654
+
+path = ".\\_save\\keras32\\"
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'    #ex) '1000-0.xxxx.hdf5', 랜덤스테이트도 적용가능
+filepath = "".join([ path, "keras32_", date, '_', filename])
+# 생성 ex) .\\_save\\keras29\\keras29_1000-0.xxxx.hdf5
+# to.csv에도 적용 가능
+
+#####################################
+
+mcp = ModelCheckpoint(
+    monitor='val_loss',
+    mode = 'auto',
+    patience = 10,
+    verbose = 1,
+    save_best_only = True,
+    filepath = filepath
+)
+
+
+model.fit(x_train, y_train,
+                epochs=500,
+                batch_size=16,
+                validation_split=0.2, 
+                callbacks=[es, mcp]
+                )
+
+
+model.save(".//_save//keras29//keras29_3_save_model.h5")
+#restore_best_weights이기 때문에 가장 최적의 가중치가 저장된다
 
 #4. 예측 및 평가
 loss = model.evaluate(x_test, y_test)
