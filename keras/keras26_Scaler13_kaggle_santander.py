@@ -36,7 +36,7 @@ rbs = RobustScaler()
 
 x_train = rbs.fit_transform(x_train)
 x_test = rbs.transform(x_test)
-tesr = rbs.transform(test)
+test = rbs.transform(test)
 
 
 
