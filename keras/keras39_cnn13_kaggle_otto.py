@@ -63,36 +63,14 @@ es = EarlyStopping(monitor='val_loss', mode='min',
                    patience=10, verbose=1,
                    restore_best_weights=True,
                    )
-
-###### mcp 세이브 파일명 만들기 ######
-import datetime
-date = datetime.datetime.now()
-# print(date)    
-# print(type(date))  
-date = date.strftime("%m%d_%H%M")
-# print(date)     
-# print(type(date))  
-
-path = './_save/keras39/'
-filename = '{epoch:04d}-{val_loss:.4f}.hdf5' 
-filepath = "".join([path, 'k39_13_', date, '_', filename])   
-#####################################
-
-mcp = ModelCheckpoint(
-    monitor='val_loss',
-    mode='auto',
-    verbose=1,     
-    save_best_only=True,   
-    filepath=filepath, 
-)
-
 start = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=64,
           verbose=1, 
           validation_split=0.1,
-          callbacks=[es, mcp],
+          callbacks=[es,],
           )
 end = time.time()
+model.save("C:\\ai5\\_save\\keras39\\keras39_13_kaggle_otto.hdf5")
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test, verbose=1)
