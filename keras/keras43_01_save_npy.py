@@ -53,6 +53,8 @@ xy_test = test_datagen.flow_from_directory(
     shuffle=False,  
 )   
 
+
+
 print(xy_train[0][0].shape)
 
 np_path = "c:/ai5/_data/_save_npy/"
