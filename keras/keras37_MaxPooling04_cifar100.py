@@ -38,17 +38,18 @@ model = Sequential()
 model.add(Conv2D(25, (2,3),
                  padding='same', input_shape = (32,32,3))) #((커널사이즈*커널사이즈)*채널+1)*필터
 model.add(MaxPooling2D())
+model.add(BatchNormalization())
 model.add(Conv2D(12, (2,2), activation='relu', strides=2))         # 상당의 필터는 하단의 채널이 된다, 커널 사이즈가 사실상 CNN의 가중치가 된다
-model.add(BatchNormalization()) 
+model.add(BatchNormalization())
 model.add(Conv2D(20, (2,2),padding='same', activation='relu', strides=2))
 model.add(Flatten())
-model.add(Dropout(0.1))
+model.add(BatchNormalization()) 
+model.add(Dropout(0.5))
+model.add(BatchNormalization())
 model.add(Dense(200, activation='relu'))
-
+model.add(BatchNormalization())
 model.add(Dense(100, activation='relu'))
 model.add(BatchNormalization())
-
-model.add(Dense(100, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(100, activation='softmax'))
 
@@ -56,25 +57,26 @@ model.summary()
 
 #3. 컴파일 및 훈련
 es = EarlyStopping(
-    monitor='val_loss', 
-    mode = 'min',
-    patience=20,
+    monitor='val_acc', 
+    mode = 'max',
+    patience=100,
     verbose=1, 
     restore_best_weights=True
 )
 mcp = ModelCheckpoint(
-    monitor='val_loss',
-    mode = 'auto',
+    monitor='val_acc',
+    mode = 'max',
     verbose=1, 
     save_best_only=True,
-    filepath='.//_save//keras35//keras35__save_cnn7_cifar100_02.hdf5'
+    filepath='.//_save//keras35//keras35__save_cnn7_cifar100_03.hdf5'
+
 )
 
 model.compile(loss = 'categorical_crossentropy', optimizer='adam',
               metrics=['acc'])
 model.fit(x_train, y_train,
-          epochs = 1000,
-          batch_size=512,
+          epochs = 2000,
+          batch_size=550,
           validation_split=0.1,
           callbacks=[es, mcp]
 )
