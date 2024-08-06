@@ -45,7 +45,7 @@ datagen = ImageDataGenerator(
     fill_mode='nearest',         # 10% 이동 시 한쪽은 소실, 한쪽은 가까이에 있던 부분의 이미지로 채워짐
 )
 
-it = datagen.flow(img, batch_size=1,)   # flow는 수치화된 데이터를 가져다가 증폭하는 함수
+it = datagen.flow(img, batch_size=1,)   # flow는 수치화된 데이터를 가져오는 함수
 print(it.next())
 
 fig, ax = plt.subplots(nrows=1, ncols=5, figsize=(5,5))

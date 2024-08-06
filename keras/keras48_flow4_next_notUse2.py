@@ -27,17 +27,16 @@ print(x_train.shape)  #(60000, 28, 28)
 xy_data = train_datagen.flow(
     np.tile(x_train[0].reshape(28*28), augment_size).reshape(-1, 28, 28, 1), #np.tile()은 배열 전체의 반복
     np.zeros(augment_size),   # y에 0을 채움
-    batch_size=augment_size,
+    batch_size=32,
     shuffle=False
-).next()
+) #.next()
 
-# print(x_data.shape) #AttributeError: 'tuple' object has no attribute 'shape'
-print(len(xy_data)) # 리스트와 튜플형태의 데이터는 len()으로 확인한다
-print(xy_data[0].shape) # x데이터의 형태 확인 #(100, 28, 28, 1)
-print(xy_data[1].shape) # (100,)
+print(xy_data[0][0].shape) #(32, 28, 28, 1)
+print(xy_data[1][0].shape)
+print(xy_data[0][1].shape) #(32,)
 
-plt.figure(figsize=(7,7))
-for i in range(49):
-    plt.subplot(7,7,i+1)
-    plt.imshow(xy_data[0][i], cmap='gray')
+plt.figure(figsize=(5,5))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.imshow(xy_data[0][0][i], cmap='gray')
 plt.show()

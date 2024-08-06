@@ -34,9 +34,9 @@ xy_train = train_datagen.flow_from_directory(
     shuffle=True
 )
 
-# np_path = "C:\\ai5\\_data\\_save_npy\\"
-# np.save(np_path + "ke4507_gender_x_train.npy", arr=xy_train[0][0])
-# np.save(np_path + "ke4507_gender_y_train.npy", arr=xy_train[0][1])
+np_path = "C:\\ai5\\_data\\_save_npy\\"
+np.save(np_path + "ke4507_gender_x_train.npy", arr=xy_train[0][0])
+np.save(np_path + "ke4507_gender_y_train.npy", arr=xy_train[0][1])
 
 """
 데이터 라벨 종류 알아내기

@@ -29,15 +29,16 @@ xy_data = train_datagen.flow(
     np.zeros(augment_size),   # y에 0을 채움
     batch_size=augment_size,
     shuffle=False
-).next()
-
+) #.next()
+print(type(xy_data)) # 넥스트가 있으면<class 'tuple'>,
+# 넥스트가 없는 경우 <class 'keras.preprocessing.image.NumpyArrayIterator'>
+# print(xy_data[0].shape) #AttributeError: 'tuple' object has no attribute 'shape'
+print(xy_data[0][0].shape) #(100, 28, 28, 1)
 # print(x_data.shape) #AttributeError: 'tuple' object has no attribute 'shape'
-print(len(xy_data)) # 리스트와 튜플형태의 데이터는 len()으로 확인한다
-print(xy_data[0].shape) # x데이터의 형태 확인 #(100, 28, 28, 1)
-print(xy_data[1].shape) # (100,)
+
 
 plt.figure(figsize=(7,7))
 for i in range(49):
     plt.subplot(7,7,i+1)
-    plt.imshow(xy_data[0][i], cmap='gray')
+    plt.imshow(xy_data[0][0][i], cmap='gray')
 plt.show()

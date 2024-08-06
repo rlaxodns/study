@@ -5,7 +5,7 @@ from keras.layers import Dense
 #1. data
 x = np.array(range(10))
 
-print(x) #[0 1 2 3 4 5 6 7 8 9]
+print(x) #[0 1 2 3 4 5 6 7 8 9]  
 print(x.shape) #(10,)
 # 전산의 모든 것은 0부터 시작하기 때문에 마지막 숫자에서 -1을 해서 끝자리를 판단한다.
 
