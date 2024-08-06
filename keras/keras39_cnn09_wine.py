@@ -58,7 +58,7 @@ start = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=16,
           verbose=1, 
           validation_split=0.1,
-          callbacks=[es, mcp],
+          callbacks=[es],
           )
 end = time.time()
 model.save("C:\\ai5\\_save\\keras39\\keras39_09_wine.hdf5")

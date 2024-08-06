@@ -58,29 +58,12 @@ es = EarlyStopping(monitor='val_loss', mode='min',
                    restore_best_weights=True,
                    )
 
-###### mcp 세이브 파일명 만들기 ######
-import datetime
-date = datetime.datetime.now()
-date = date.strftime("%m%d_%H%M")
-
-path = './_save/keras40/'
-filename = '{epoch:04d}-{val_loss:.4f}.hdf5' 
-filepath = "".join([path, 'k40_03_', date, '_', filename])   
-#####################################
-
-mcp = ModelCheckpoint(
-    monitor='val_loss',
-    mode='auto',
-    verbose=1,     
-    save_best_only=True,   
-    filepath=filepath, 
-)
 
 start = time.time()
 hist = model.fit(x_train, y_train, epochs=2000, batch_size=64,
           verbose=1, 
           validation_split=0.2,
-          callbacks=[es, mcp],
+          callbacks=[es],
           )
 end = time.time()
 

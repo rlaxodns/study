@@ -42,3 +42,16 @@ print(xy_train)
 # # <keras.preprocessing.image.DirectoryIterator object at 0x000002BD64756700>
 print(xy_train.next())  # 이터레이터의 첫번쨰를 보여달라는 의미
 print(xy_train.next())  # 두번째 데이터 출력
+
+print(xy_train[0])  # [1., 1., 0., 1., 1., 1., 0., 1., 1., 0.]
+print(xy_train[0][0])    # 첫번쨰의 x데이터만 보기
+print(xy_train[0][1])    # 첫번쨰의 y데이터만 보기 
+# print(xy_train[0].shape)    # AttributeError: 'tuple' object has no attribute 'shape', tuple 의 0번쨰 - x, 1번쨰 - y데이터
+print(xy_train[0][0].shape)   # (10, 200, 200, 1) , xy_train[0~15][0~1]
+# print(xy_train[16])         # ValueError: Asked to retrieve element 16, but the Sequence has length 16
+# print(xy_train[15][2])        # IndexError: tuple index out of range
+
+print(type(xy_train))         # <class 'keras.preprocessing.image.DirectoryIterator'>
+print(type(xy_train[0]))      # <class 'tuple'>
+print(type(xy_train[0][0]))   # <class 'numpy.ndarray'> - x
+print(type(xy_train[0][1]))   # <class 'numpy.ndarray'> - y

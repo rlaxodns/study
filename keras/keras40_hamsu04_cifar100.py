@@ -62,22 +62,13 @@ es = EarlyStopping(monitor='val_loss', mode='min',
                    restore_best_weights=True,
                    )
 
-###### mcp 세이브 파일명 만들기 ######
-import datetime
-date = datetime.datetime.now()
-date = date.strftime("%m%d_%H%M")
-
-path = './_save/keras40/'
-filename = '{epoch:04d}-{val_loss:.4f}.hdf5' 
-filepath = "".join([path, 'k40_04_', date, '_', filename])   
-#####################################
 
 mcp = ModelCheckpoint(
     monitor='val_loss',
     mode='auto',
     verbose=1,     
     save_best_only=True,   
-    filepath=filepath, 
+    filepath="C:\\ai5\\_save\\keras40\\keras40_4_cifar100.hdf5", 
 )
 
 start = time.time()
