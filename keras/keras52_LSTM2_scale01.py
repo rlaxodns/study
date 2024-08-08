@@ -27,4 +27,3 @@ loss = model.evaluate(x, y)
 result = model.predict(x_predict)
 
 print(loss, result)
-

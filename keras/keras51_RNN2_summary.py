@@ -35,6 +35,7 @@ print(x.shape) #(7, 3, 1) #3D tensor with shape (batch_size, timesteps, features
 
 #2. 모델 구성
 model = Sequential()
+
 model.add(SimpleRNN(20, input_shape = (3,1), activation='relu')) # 행무시, 열우선 input_shape=(timesteps, features)
 # 연산량 계산법 = (units*units) + (units*dim) +bias =units *(units + features + bias)
 model.add(Dense(10, activation='relu'))                     
