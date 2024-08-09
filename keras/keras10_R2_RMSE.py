@@ -46,7 +46,7 @@ print('loss', loss)
 result = model.predict([x])
 
 y_predict = model.predict([x_test])
-from sklearn.metrics import r2_score     #결정계수 구하는 함수
+from sklearn.metrics import r2_score, mean_squared_error    #결정계수 구하는 함수
 r2 = r2_score(y_test, y_predict)
 #보조지표이기 때문에 검증하는 y_test값으로 r2값을 구한다
 #또한, 평가는 평가지표로 검증하는 것이 좋기 때문에 
@@ -54,4 +54,7 @@ r2 = r2_score(y_test, y_predict)
 print('결과', result)
 print(r2)
 
+def RMSE(y_test, y_predict):
+    np.sqrt(mean_squared_error(y_test, y_predict))
+rmse = RMSE(y_test, y_predict)
 #loss값이 좋지 않은 경우, 1) 데이터 전처리를 하거나 2) 하이퍼 파라미터 튜닝을 한다.
