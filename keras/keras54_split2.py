@@ -17,10 +17,9 @@ bbb = split_x(a, size)
 print(bbb)
 print(bbb.shape)
 
-x = bbb[:,:-1]
-y = bbb[:, -1,0]
-print(x,
-    #    y
+x = bbb[:,:-1]   #bbb[모든행, 모든 열에서 제일 뒤에 한개 빼기] // [행, 열]
+y = bbb[:, -1]
+print(x, y
        )
        
 print(x.shape, y.shape) #(6, 4, 2) (6,)

@@ -3,12 +3,13 @@
 # 자르는 거 맘대로, 조건)pre = 2016.12.31 00:10부터 1.1까지 예측
 # 144개
 #jena_김태운 // 첨부파일 jena_김태운.py , h5, 
-from sklearn.metrics import ad
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, Dropout
+from keras.layers import Dense, LSTM, Dropout, Bidirectional, MaxPooling1D
+from keras.layers import Conv1D, Flatten, BatchNormalization
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 import os
@@ -16,7 +17,7 @@ import os
 os.environ["TF_GPU_ALLOCATOR"] = "cuda_malloc_async"
 
 # 데이터
-data = pd.read_csv(".\\_data\\kaggle\\jena\\jena_climate_2009_2016.csv", index_col=0)
+data = pd.read_csv("C:\\ai5\\_data\\kaggle\\jena\\jena_climate_2009_2016.csv", index_col=0)
 
 # train_dt = pd.DatetimeIndex(data.index)
 # data['day'] = train_dt.day
@@ -49,8 +50,8 @@ y = split_x(y, size)
 
 x_test1 = x[-1].reshape(-1,144,13)
 # print(x)
-x = x[:143, :]
-y = y[1:144, :]
+x = np.delete(x, -1, axis = 0) # x = x[:143, :]
+y = np.delete(y, 0, axis = 0)  # y = y[1:144, :]
 
 print(x.shape, y.shape) 
 print(x_test1.shape)
@@ -65,8 +66,12 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 
 #2. 모델 구성
 model = Sequential()
-model.add(LSTM(144, input_shape = (x.shape[1], x.shape[2]),return_sequences=True))
-model.add(LSTM(144))
+model.add(Conv1D(filters=100,kernel_size=3, input_shape = (x.shape[1], x.shape[2])))
+model.add(MaxPooling1D())
+model.add(Dropout(0.2))
+model.add(BatchNormalization())
+model.add(Conv1D(64, 3))
+model.add(Flatten())
 model.add(Dropout(0.2))
 model.add(Dense(144))
 model.add(Dense(144))
@@ -85,7 +90,7 @@ es = EarlyStopping(
 mcp = ModelCheckpoint(
     monitor='val_loss',
     mode = 'auto',
-    verbose=1,
+    verbose=500,
     save_best_only=True,
     filepath="C:\\ai5\\_save\\keras55\\keras55_06_.hdf5"
 )
@@ -119,3 +124,4 @@ print(rmse)
 #03) 1.4097586733290801
 #04) 1.459469542000627
 #05) 1.414780791225948
+# 1.3558775147548068

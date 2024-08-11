@@ -3,12 +3,12 @@
 # 자르는 거 맘대로, 조건)pre = 2016.12.31 00:10부터 1.1까지 예측
 # 144개
 #jena_김태운 // 첨부파일 jena_김태운.py , h5, 
-from sklearn.metrics import ad
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, Dropout
+from keras.layers import Dense, LSTM, Dropout, Bidirectional
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 import os
@@ -49,8 +49,8 @@ y = split_x(y, size)
 
 x_test1 = x[-1].reshape(-1,144,13)
 # print(x)
-x = x[:143, :]
-y = y[1:144, :]
+x = np.delete(x, -1, axis = 0) # x = x[:143, :]
+y = np.delete(y, 0, axis = 0)  # y = y[1:144, :]
 
 print(x.shape, y.shape) 
 print(x_test1.shape)
@@ -65,8 +65,8 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 
 #2. 모델 구성
 model = Sequential()
-model.add(LSTM(144, input_shape = (x.shape[1], x.shape[2]),return_sequences=True))
-model.add(LSTM(144))
+model.add(Bidirectional(LSTM(64, return_sequences=True), input_shape = (x.shape[1], x.shape[2])))
+model.add(LSTM(128))
 model.add(Dropout(0.2))
 model.add(Dense(144))
 model.add(Dense(144))
@@ -85,7 +85,7 @@ es = EarlyStopping(
 mcp = ModelCheckpoint(
     monitor='val_loss',
     mode = 'auto',
-    verbose=1,
+    verbose=1000,
     save_best_only=True,
     filepath="C:\\ai5\\_save\\keras55\\keras55_06_.hdf5"
 )

@@ -1,6 +1,9 @@
+#52_2 복사
+
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, SimpleRNN, LSTM, GRU, Dropout, Bidirectional
+from keras.layers import Conv1D, Flatten
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
 
@@ -20,11 +23,12 @@ x_predict = np.array([50, 60, 70])
 x = x.reshape(13,3,1)
 x_predict = np.array([50, 60, 70]).reshape(1,3,1)
 
-
+print(x.shape, y.shape)
 
 #2. 모델 구성
 model = Sequential()
-model.add(Bidirectional(LSTM(64, activation='relu'), input_shape = (3, 1)))
+model.add(Conv1D(filters=30, kernel_size=3, input_shape = (3,1)))
+model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
@@ -50,16 +54,10 @@ model.fit(x, y,
 
 
 model.save("C:\\ai5\\_save\\keras52\\keras52_LSTM2_scale03.hdf5")
- 
+
 #4. 평가 및 예측
 loss = model.evaluate(x, y)
 result = model.predict(x_predict)
 
 print(loss, result)
-
-
-"""
-0.0009154558647423983 [[81.05689]]
-0.06747078150510788 [[75.59587]]
-"""
 
