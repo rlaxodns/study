@@ -20,7 +20,7 @@ loss=model.evaluate(x,y)
 result=model.predict(np.array([6]))
 
 print("=================")
-print("epocs", epochs)
+print("epochs", epochs)
 print("오차값은", loss)
 print("예측값은", result)
 

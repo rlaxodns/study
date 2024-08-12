@@ -83,7 +83,7 @@ model.compile(loss = 'mse', optimizer='adam')
 es = EarlyStopping(
     monitor = 'val_loss',
     mode = 'min',
-    patience=30,
+    patience=50,
     restore_best_weights=True
 )
 
@@ -125,3 +125,4 @@ print(rmse)
 #04) 1.459469542000627
 #05) 1.414780791225948
 # 1.3558775147548068
+# 1.5053161342651524
