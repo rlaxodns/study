@@ -73,13 +73,14 @@ print(x_train.shape, x_test.shape) #(1821, 100, 300) (206, 100, 300)
 
 #2. 모델구성
 from keras.models import Sequential
-from keras.layers import Dense, Conv2D, Dropout, BatchNormalization, Flatten, LSTM
+from keras.layers import Dense, Conv2D, Dropout, BatchNormalization, Flatten, LSTM, Conv1D
 model = Sequential()
-model.add(LSTM(32, input_shape = (100,300), activation='relu', return_sequences=True))
+model.add(Conv1D(32, 3, input_shape = (100,300), activation='relu'))
 model.add(Dropout(0.2))
 
-model.add(LSTM(32, activation='relu'))
+model.add(Conv1D(32, 3, activation='relu'))
 model.add(Dropout(0.2))
+model.add(Flatten())
 
 model.add(Dense(1024, activation='relu'))
 model.add(Dense(254, activation='relu'))

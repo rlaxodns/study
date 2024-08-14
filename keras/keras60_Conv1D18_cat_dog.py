@@ -98,7 +98,7 @@ print('accuracy_score :', r2)
 
 
 ### csv 파일 만들기 ###
-y_submit = model.predict(x_test0, batch_size=16)
+y_submit = model.predict(x_test)
 # print(y_submit)
 
 # y_submit = np.round(y_submit,4)
