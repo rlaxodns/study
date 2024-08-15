@@ -33,7 +33,8 @@ model = Model(inputs = input1, outputs = [middle1_out, middle2_out])
 #3. 컴파일 및 훈련
 model.compile(loss = 'mse', optimizer='adam')
 model.fit(x1_train, [y1_train, y2_train],
-           epochs=10,
+           epochs=1000,
+           batch_size=1,
            validation_split=0.2)
 
 #4. 예측 및 평가
