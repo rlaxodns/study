@@ -47,6 +47,7 @@ y = pad_sequences(y, maxlen=5)
 # print(x.shape, y.shape) #(20, 5) (13, 5)
 # print(y)
 
+# 
 # 원핫인코딩
 x = to_categorical(x)
 y = to_categorical(y, num_classes=54)
