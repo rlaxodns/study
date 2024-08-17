@@ -74,7 +74,12 @@ model = Sequential()
 
 
 # ----------------------임베딩3-------------------------------------------
-model.add(Embedding(input_dim=30, output_dim=100))
+# model.add(Embedding(input_dim=10, output_dim=100)) # 인풋이 늘거나 줄어들면 성능저하
+
+#-----------------------임베딩4-------------------------------------------
+# model.add(Embedding(31, 100))
+model.add(Embedding(31, 100, input_length=1)) #1은 가능 왜냐하면, input_length의 약수는 가능함
+
 model.add(LSTM(10))    #(None, 10) 
 model.add(Dense(10))
 model.add(Dense(1, activation='sigmoid'))
