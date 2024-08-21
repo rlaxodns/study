@@ -1,3 +1,5 @@
+# train_test_split 후 스케일링 후 pca
+
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -13,25 +15,28 @@ x = data['data']
 y = data.target
 # print(x.shape, y.shape) #(150, 4) (150,)
 
+x_train, x_test, y_train, y_test = train_test_split(x, y, 
+                                                    test_size= 0.3,
+                                                    random_state=123,
+                                                    stratify=y, # y의 라벨에 맞춰서 분류의 갯수 맞춰준다 
+                                                    shuffle=True) # shuffle = False가 디폴트
+
+
 # 일반적으로 스케일링 후 pca해야 성능이 좋음
 std = StandardScaler()
-x = std.fit_transform(x)
+x_train = std.fit_transform(x_train)
+x_test = std.transform(x_test)
 # pca를 사용시에 스케일링도 같이 사용
 
 pca = PCA(n_components=3)
-x = pca.fit_transform(x)
-
+x_train = pca.fit_transform(x_train)
+x_test = pca.transform(x_test)
 # print(x)
-# print(x.shape)
+print(x_train.shape, x_test.shape)
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, 
-                                                    test_size= 0.1,
-                                                    random_state=7,
-                                                    stratify=y, # y의 라벨에 맞춰서 분류의 갯수 맞춰준다 
-                                                    )
 
 #2. 모델 구성
-model = RandomForestClassifier(random_state=7)
+model = RandomForestClassifier(random_state=123)
 # 모델에 컴파일러까지 통합되어있음
 
 #3. 훈련
