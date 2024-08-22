@@ -28,8 +28,8 @@ x_train = std.fit_transform(x_train)
 x_test = std.transform(x_test)
 # pca를 사용시에 스케일링도 같이 사용
 
-for i in range(x.shape[1]-1,1,-1):
-    i
+# for i in range(x.shape[1]-1, 1, -1):
+#     i
 
 
 pca = PCA(n_components=i)
