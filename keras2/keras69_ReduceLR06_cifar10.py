@@ -52,8 +52,17 @@ model.add(Dense(10, activation='softmax'))
 
 #3. 컴파일 및 훈련
 from tensorflow.keras.optimizers import Adam
-lr = [0.1]
 
+lr = 0.1
+from tensorflow.keras.callbacks import ReduceLROnPlateau
+rlr = ReduceLROnPlateau(
+    monitor= 'val_loss',
+    mode = 'min', 
+    patience=25, 
+    verbose=1,
+    factor=0.5
+
+)
 es = EarlyStopping(
     monitor= 'val_loss',
     mode = 'min', 
@@ -76,7 +85,7 @@ model.fit(x_train, y_train,
         epochs = 100,
         batch_size=128,
         validation_split=0.2,
-        callbacks=[es, mcp])
+        callbacks=[es, mcp, rlr])
 
 #4. 평가 및 예측
 print("===========출력==================")

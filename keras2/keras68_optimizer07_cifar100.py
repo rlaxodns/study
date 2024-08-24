@@ -59,7 +59,15 @@ model.summary()
 
 # #3. 컴파일 및 훈련
 from tensorflow.keras.optimizers import Adam
-lr = [0.1, 0.01, 0.005, 0.001, 0.0005, 0.0001]
+from tensorflow.keras.callbacks import ReduceLROnPlateau
+lr = 0.1
+rlr = ReduceLROnPlateau(
+    monitor='val_loss',
+    mode = 'min',
+    verbose=1, 
+    patience=10,
+    factor=0.5
+)
 
 es = EarlyStopping(
     monitor='val_loss', 
@@ -76,17 +84,17 @@ mcp = ModelCheckpoint(
     filepath='.//_save//keras35//keras35__save_cnn7_cifar100_00.hdf5'
 )
 for i in range(0, len(lr), 1):
-    model.compile(loss = 'categorical_crossentropy', optimizer=Adam(learning_rate=lr[i]),
+    model.compile(loss = 'categorical_crossentropy', optimizer=Adam(learning_rate=lr),
                   metrics=['acc'])
     model.fit(x_train, y_train,
               epochs = 1000,
               batch_size=300,
               validation_split=0.2,
-              callbacks=[es, mcp]
+              callbacks=[es, mcp, rlr]
     )
 
     #4. 평가 및 예측
     print("===========출력==================")
     loss = model.evaluate(x_test, y_test, verbose=0)
-    print('lr:{0},로스:{1}'.format(lr[i], loss[0]))
-    print('lr:{0},r2:{1}'.format(lr[i], loss[1]))
+    print('lr:{0},로스:{1}'.format(lr, loss[0]))
+    print('lr:{0},r2:{1}'.format(lr, loss[1]))

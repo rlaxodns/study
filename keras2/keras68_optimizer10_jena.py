@@ -75,7 +75,7 @@ from tensorflow.keras.optimizers import Adam
 lr = [0.1, 0.01, 0.005, 0.001, 0.0005, 0.0001]
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-for i in range(o, len(lr), 1):
+for i in range(0, len(lr), 1):
     model.compile(loss = 'mse', optimizer=Adam(learning_rate=lr[i]), metrics=['acc'])
 
     es = EarlyStopping(

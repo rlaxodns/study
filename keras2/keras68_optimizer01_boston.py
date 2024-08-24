@@ -34,7 +34,7 @@ model.add(Dense(1))
 from tensorflow.keras.optimizers import Adam
 
 # learning_rate = 0.001 # 기본값, 기본값이 베스트
-learning_rate = 0.00145
+learning_rate = 0.0
 model.compile(loss = 'mse', optimizer=Adam(learning_rate = learning_rate))
 model.fit(x_train, y_trian, 
           epochs=100,
@@ -44,14 +44,12 @@ model.fit(x_train, y_trian,
 
 #4. 평가 및 예측
 from sklearn.metrics import r2_score
-
-print("===========출력==================")
 loss = model.evaluate(x_test, y_test, verbose=0)
-print('lr:{0},로스:{1}'.format(learning_rate, loss))
+print("로스:{0}".format(loss))
 
 y_predict = model.predict(x_test, verbose=0)
 r2 = r2_score(y_test, y_predict)
-print('lr:{0},r2:{1}'.format(learning_rate, r2))
+print('r2:{0}'.format(r2))
 
 # 로스:28.413278579711914
 # r2:0.7001037447580287

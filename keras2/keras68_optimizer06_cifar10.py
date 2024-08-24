@@ -81,5 +81,5 @@ for i in range(0, len(lr), 1):
     #4. 평가 및 예측
     print("===========출력==================")
     loss = model.evaluate(x_test, y_test, verbose=0)
-    print('lr:{0},로스:{1}'.format(lr[i], loss[0]))
-    print('lr:{0},r2:{1}'.format(lr[i], loss[1]))
+    print('lr:{0},로스:{1}'.format(lr, loss[0]))
+    print('lr:{0},r2:{1}'.format(lr, loss[1]))

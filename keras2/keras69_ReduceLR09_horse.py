@@ -95,11 +95,21 @@ model.add(Dense(1, activation='sigmoid'))
 
 #3. 컴파일 및 훈련
 from tensorflow.keras.optimizers import Adam
-lr = [0.1]
+lr = 0.1
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 
-model.compile(loss = 'binary_crossentropy', optimizer=Adam(learning_rate=lr[i]), metrics=['acc'])
+model.compile(loss = 'binary_crossentropy', optimizer=Adam(learning_rate=lr), metrics=['acc'])
+from tensorflow.keras.callbacks import ReduceLROnPlateau
+rlr = ReduceLROnPlateau(
+    monitor= 'val_loss',
+    mode = 'min', 
+    patience=25, 
+    verbose=1,
+    factor=0.5
+
+)
+
 es = EarlyStopping(
     monitor='val_loss',
     mode = 'min', 
@@ -119,11 +129,11 @@ model.fit(x_train, y_train,
         epochs=100,
         batch_size=512,
         validation_split=0.2,
-        callbacks=[es, mcp])
+        callbacks=[es, mcp,rlr])
 
 #4. 평가 및 예측
 print("===========출력==================")
 loss = model.evaluate(x_test, y_test, verbose=0)
-print('lr:{0},로스:{1}'.format(lr[i], loss[0]))
-print('lr:{0},r2:{1}'.format(lr[i], loss[1]))
+print('lr:{0},로스:{1}'.format(lr, loss[0]))
+print('lr:{0},r2:{1}'.format(lr, loss[1]))
 
