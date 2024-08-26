@@ -21,8 +21,8 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.3, random_state=72)
 
 ####################################################
-y_train =np.log(y_train)
-y_test = np.log(y_test)
+# y_train =np.log(y_train)
+# y_test = np.log(y_test)
 ###################################################
 
 
