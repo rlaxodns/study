@@ -47,8 +47,6 @@ y_train = np.log1p(y_train)
 y_test = np.log1p(y_test)
 ##################################################
 
-
-
 #. 모델 구성
 model = Sequential()
 model.add(Dense(128, input_dim = 93, activation='relu'))
