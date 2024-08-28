@@ -57,6 +57,8 @@ rbs = RobustScaler()
 x_train = mas.fit_transform(x_train)
 x_test = mas.transform(x_test)
 
+print(x_train.shape, y_train.shape)
+exit()
 # 모델 구성
 model = Sequential()
 model.add(Dense(128, input_dim = 4, activation='relu'))

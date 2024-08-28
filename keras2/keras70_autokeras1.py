@@ -4,6 +4,8 @@ print(ak.__version__)
 print(tf.__version__)
 
 import time
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='3' # 로그값을 줄이는 로그레벨
 
 #1. 데이터
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
@@ -12,14 +14,14 @@ import time
 #2. 모델
 model = ak.ImageClassifier(
     overwrite=False,
-    max_trials=2,
+    max_trials=3,
 
 )
 
 #3. 컴파일 훈련
 st = time.time
 model.fit(x_train, y_train,
-          epochs=1,
+          epochs=100,
           validation_split=0.15)
 et = time.time
 
@@ -40,4 +42,4 @@ print("model의 결과", result)
 y_pre2 = best_model.predict(x_test)
 result2 = model.evaluate(x_test, y_test)
 print("model의 결과", result2)
-print("걸린시간", et-st)
+# print("걸린시간", et-st)
