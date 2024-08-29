@@ -47,4 +47,46 @@ for name, model in all:
     
     except: 
         print(name, 'error')
-    
+
+        """
+        AdaBoostClassifier 의 정답률 0.9666666666666667
+BaggingClassifier 의 정답률 0.9333333333333333
+BernoulliNB 의 정답률 0.7333333333333333
+CalibratedClassifierCV 의 정답률 0.9666666666666667
+CategoricalNB error
+ClassifierChain error
+ComplementNB error
+DecisionTreeClassifier 의 정답률 0.9333333333333333
+DummyClassifier 의 정답률 0.3333333333333333
+ExtraTreeClassifier 의 정답률 0.9666666666666667
+ExtraTreesClassifier 의 정답률 0.9333333333333333
+GaussianNB 의 정답률 0.9666666666666667
+GaussianProcessClassifier 의 정답률 0.9333333333333333
+GradientBoostingClassifier 의 정답률 0.9333333333333333
+HistGradientBoostingClassifier 의 정답률 0.9333333333333333
+KNeighborsClassifier 의 정답률 0.9333333333333333
+LabelPropagation 의 정답률 0.9333333333333333
+LabelSpreading 의 정답률 0.9333333333333333
+LinearDiscriminantAnalysis 의 정답률 0.9333333333333333
+LinearSVC 의 정답률 0.9333333333333333
+LogisticRegression 의 정답률 0.9333333333333333
+LogisticRegressionCV 의 정답률 0.9333333333333333
+MLPClassifier 의 정답률 0.9333333333333333
+MultiOutputClassifier error
+MultinomialNB error
+NearestCentroid 의 정답률 0.8666666666666667
+NuSVC 의 정답률 0.9666666666666667
+OneVsOneClassifier error
+OneVsRestClassifier error
+OutputCodeClassifier error
+PassiveAggressiveClassifier 의 정답률 0.8666666666666667
+Perceptron 의 정답률 0.8666666666666667
+QuadraticDiscriminantAnalysis 의 정답률 0.9333333333333333
+RadiusNeighborsClassifier 의 정답률 1.0
+RandomForestClassifier 의 정답률 0.9333333333333333
+RidgeClassifier 의 정답률 0.8
+RidgeClassifierCV 의 정답률 0.8
+SGDClassifier 의 정답률 0.9333333333333333
+SVC 의 정답률 0.9666666666666667
+StackingClassifier error
+VotingClassifier error"""
