@@ -45,20 +45,20 @@ parameter = [
 
 #2. 모델
 
-model = HalvingGridSearchCV(XGBClassifier(
+model = HalvingRandomSearchCV(XGBClassifier(
     # tree_method = 'gpu_hist', 과거 방식
                     tree_method = 'hist',
                     device = 'cuda', 
-                    n_estimators = 50
+                    n_estimators = 50,
                     ),
 parameter, 
 cv=kfold, 
 refit = True,
 verbose=1,  #xgboost는 verbose 2or3으로 확인
 # n_jobs=-1,  # cpu의 모든 코어를 활용함
-# n_iter= 10,  # random_search의 횟수 조절
+# n_iter= 0,  # random_search의 횟수 조절
 random_state=777,
-# min_resources=100, 
+min_resources=30, 
 # max_resources=1100,
 # aggressive_elimination=True, # True의 경우 제거의 폭을 넓힌다. 제거 폭은 factor+1만큼 증가 
 factor = 3 # factor는 parameter의 수는 factor만큼 줄여서 최적의 파라미터를 찾은 후, 

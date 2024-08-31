@@ -44,26 +44,29 @@ parameter = [
     ]  #
 
 #2. 모델
+import xgboost as xgb
+es = xgb.callback.EarlyStopping(
+    rounds = 50,
+    metric_name = "mlogloss",
+    data_name = 'validation_0',
+    save_best = True,
+)
 
-model = HalvingGridSearchCV(XGBClassifier(
+model = HalvingRandomSearchCV(XGBClassifier(
     # tree_method = 'gpu_hist', 과거 방식
                     tree_method = 'hist',
                     device = 'cuda', 
-                    n_estimators = 50
+                    n_estimators = 500,
+                    eval_metrics = 'mlogloss',
+                    callbacks = [es]
                     ),
 parameter, 
 cv=kfold, 
 refit = True,
 verbose=1,  #xgboost는 verbose 2or3으로 확인
-# n_jobs=-1,  # cpu의 모든 코어를 활용함
-# n_iter= 10,  # random_search의 횟수 조절
 random_state=777,
-# min_resources=100, 
-# max_resources=1100,
-# aggressive_elimination=True, # True의 경우 제거의 폭을 넓힌다. 제거 폭은 factor+1만큼 증가 
-factor = 3 # factor는 parameter의 수는 factor만큼 줄여서 최적의 파라미터를 찾은 후, 
-# data를 다시 늘려서 최적의 파라미터를 활용해서 최적의 파라미터를 다시 파악하고, 
-# factor만큼 계속 iter반복, (facor = 3.5 등 소수점도 가능)
+min_resources=30, 
+factor = 3 
 ) 
 
 
@@ -71,7 +74,9 @@ factor = 3 # factor는 parameter의 수는 factor만큼 줄여서 최적의 파�
 st = time.time()
 
 
-model.fit(x_train, y_train,) #eval_set은 얼리스탑핑 및 validation을 활용한다
+model.fit(x_train, y_train,
+          eval_set = [(x_test, y_test)],
+          verbose = True) #eval_set은 얼리스탑핑 및 validation을 활용한다
 
 
 et = time.time()
