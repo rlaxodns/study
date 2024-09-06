@@ -3,8 +3,8 @@
 import numpy as np
 import pandas as pd
 from tensorflow.keras.datasets import mnist
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, Input, Dropout, Conv2D, Flatten, MaxPool2D
 import time
 from tensorflow.keras.utils import to_categorical
 
@@ -23,18 +23,19 @@ x_test = x_test.reshape(10000, 28, 28, 1)
 
 
 ########## OneHotEncoder ##########
-from sklearn.preprocessing import OneHotEncoder
-ohe = OneHotEncoder(sparse=False)
 
-y_train = ohe.fit_transform(y_train.reshape(-1,1))
-y_test = ohe.fit_transform(y_test.reshape(-1,1))
+
+y_train = pd.get_dummies(y_train)
+y_test = pd.get_dummies(y_test)
 print(y_train.shape)
 
 #2. 모델 구성
 def build_model(drop = 0.5, optimizer = 'adam', activation = 'relu',
                 node1 = 128, node2 = 64, node3=32, lr = 0.001):
-    input = Input(shape = (x_train.shape[1]),)
-    x = Dense(node3, activation=activation)(input)
+    input = Input(shape=(28, 28, 1))
+    x = Conv2D(node3,(3,3), activation=activation)(input)
+    x = MaxPool2D()(x)
+    x = Flatten()(x)
     x = Dense(node2, activation=activation)(x)
     x = Dropout(drop)(x)
     x = Dense(node1, activation=activation)(x)
