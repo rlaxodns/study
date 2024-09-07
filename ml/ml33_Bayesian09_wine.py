@@ -81,3 +81,8 @@ et = time.time()
 
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
+
+"""
+{'target': 1.0, 'params': {'colsample_bytree': 0.7716455435126173, 'learning_rate': 0.07316612206200168, 'max_bin': 17.28879000553614, 'max_depth': 5.312371620396405, 'min_child_samples': 80.05714672806884, 'min_child_weight': 3.3668796217250136, 'num_leaves': 25.672483010759535, 'reg_alpha': 4.880901405662105, 'reg_lambda': 2.453278548450057, 'subsample': 0.9367446772294055}}
+100 걸린 시간 85.93
+"""

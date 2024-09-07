@@ -89,5 +89,5 @@ et = time.time()
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
 
-# {'target': 1.0, 'params': {'colsample_bytree': 0.5, 'learning_rate': 0.1, 'max_bin': 17.21554995335185, 'max_depth': 10.0, 'min_child_samples': 81.58207064959846, 'min_child_weight': 4.906761394476327, 'num_leaves': 24.0, 'reg_alpha': 7.2786660771341705, 'reg_lambda': 4.769054926346684, 'subsample': 0.5}}
-# 1000 걸린 시간 2483.08
+# {'target': 0.7404580152671756, 'params': {'colsample_bytree': 0.8377842340256612, 'learning_rate': 0.05337916369568386, 'max_bin': 123.36855834852084, 'max_depth': 5.8588835570278555, 'min_child_samples': 45.69598827158711, 'min_child_weight': 18.181187209498646, 'num_leaves': 37.23098318896006, 'reg_alpha': 13.513665369957259, 'reg_lambda': 8.651043603891482, 'subsample': 0.6113411730230616}}      
+# 100 걸린 시간 11.81

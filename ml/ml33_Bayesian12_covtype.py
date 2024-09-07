@@ -14,7 +14,7 @@ import pandas as pd
 #1. 데이터
 x, y = fetch_covtype(return_X_y=True)
 random_state = 777
-y = pd.get_dummies(y)
+# y = pd.get_dummies(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                     test_size=0.2, random_state=777, stratify=y)
@@ -83,3 +83,7 @@ et = time.time()
 
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
+
+"""
+{'target': 0.832723767888953, 'params': {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_bin': 180.03080236441153, 'max_depth': 10.0, 'min_child_samples': 103.20821288341422, 'min_child_weight': 26.047059624696303, 'num_leaves': 24.0, 'reg_alpha': 0.578289351695007, 'reg_lambda': 10.0, 'subsample': 1.0}}
+100 걸린 시간 942.5"""
