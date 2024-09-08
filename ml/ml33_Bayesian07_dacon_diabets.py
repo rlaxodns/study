@@ -1,18 +1,21 @@
-# https://dacon.io/competitions/open/235576/overview/description
+# https://dacon.io/competitions/official/236068/overview/description
 
+import pandas as pd
 import numpy as np
-import pandas as pd #csv파일 사용시 데이터의 인덱스와 컬럼을 분리시 사용
-from tensorflow.keras.models import Sequential
-from keras.layers import Dense
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score
-from sklearn.datasets import load_diabetes
 from keras.models import Sequential
 from keras.layers import Dense
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
-from xgboost import XGBClassifier, XGBRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from keras.callbacks import EarlyStopping
+
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import StratifiedKFold
+from sklearn.svm import SVC
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, r2_score
 from bayes_opt import BayesianOptimization
 import time
@@ -20,38 +23,21 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-#1. data
-
-path = "./_data/dacon/따릉이/" # 상대경로
-train_csv = pd.read_csv(path + "train.csv", index_col=0) 
-test_csv = pd.read_csv(path + "test.csv", index_col=0) 
-submission_csv = pd.read_csv(path + "submission.csv", index_col=0) 
-train_csv = train_csv.dropna() #데이터 내의 na값을 제외한다.
-test_csv = test_csv.fillna(test_csv.mean())  # .fillna  : 결측치를 채우는 함수
-                                             # .mean() 각 컬럼의 평균값을 채워진다.
-
-x = train_csv.drop(['count'], axis=1)  # axis=0은 행의 [---]이름의 행 삭제, 
-# axis=1는 열의 [---]이름의 열 삭제
+#1. 데이터 구성
+train = pd.read_csv("C:\\ai5\\_data\\dacon\\diabetes\\train.csv", index_col = 0)
+test = pd.read_csv("C:\\ai5\\_data\\dacon\\diabetes\\test.csv", index_col=0)
+submission = pd.read_csv("C:\\ai5\\_data\\dacon\\diabetes\\sample_submission.csv", index_col = 0)
 
 
-y = train_csv['count'] #y는 카운트 열만 지정
-print(y.shape) # (1328,)
+x = train.drop(['Outcome'], axis=1)
+y = train['Outcome']
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, 
-        test_size=0.2, shuffle=True, random_state=4345)
-# print(x_train.shape) # (929, 9)
+x_train, x_test, y_train, y_test = train_test_split(x, y,
+                                                    test_size=0.2, random_state=777, 
+                                                    stratify=y)
 
-from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
-mms = MinMaxScaler()
-std = StandardScaler()
-mas = MaxAbsScaler()
-rbs = RobustScaler()
-
-x_train = mas.fit_transform(x_train)
-x_test = mas.transform(x_test)
-
-from catboost import CatBoostRegressor
 #2. 모델
+from catboost import CatBoostClassifier
 bayesian_params = {
     'learning_rate':(0.001, 0.1),
     'max_depth':(3, 10),
@@ -81,7 +67,7 @@ def xgb_hamsu(learning_rate, max_depth, num_leaves, min_child_samples, min_child
         # 'reg_alpha':reg_alpha,
     }
 
-    model = CatBoostRegressor(**params,
+    model = CatBoostClassifier(**params,
                                task_type='GPU',         # GPU사용 기본은CPU
                                 devices='0',
                                 early_stopping_rounds=100, #조기종료 기본값 None
@@ -92,7 +78,7 @@ def xgb_hamsu(learning_rate, max_depth, num_leaves, min_child_samples, min_child
               verbose = 0)
     
     y_predict = model.predict(x_test)
-    result = r2_score(y_test, y_predict)
+    result = accuracy_score(y_test, y_predict)
     
     return result
 
@@ -110,6 +96,5 @@ et = time.time()
 
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
-
-# {'target': 0.7990505823679946, 'params': {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_bin': 488.2776767097832, 'max_depth': 10.0, 'min_child_samples': 148.27422555633828, 'min_child_weight': 50.0, 'num_leaves': 40.0, 'reg_alpha': 19.540922198655903, 'reg_lambda': -0.001, 'subsample': 1.0}}
-# 100 걸린 시간 91.23
+# {'target': 0.8335682153547348, 'params': {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_bin': 387.4714595080699, 'max_depth': 10.0, 'min_child_samples': 72.27203309413531, 'min_child_weight': 15.533501499858756, 'num_leaves': 40.0, 'reg_alpha': 8.47583949810588, 'reg_lambda': -0.001, 'subsample': 0.6135541120533659}}
+# 100 걸린 시간 112.75

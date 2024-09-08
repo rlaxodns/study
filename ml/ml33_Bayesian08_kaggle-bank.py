@@ -1,12 +1,31 @@
+# train['종가'] = train['종가'].str.replace(',', '')
+# https://www.kaggle.com/c/playground-series-s4e1/data
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
-import xgboost as xgb
 import numpy as np
-import joblib
+from keras.models import Sequential
+from keras.layers import Dense
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, accuracy_score
+from keras.callbacks import EarlyStopping
 
-from catboost import CatBoostClassifier, CatBoostRegressor
-from imblearn.over_sampling import SMOTE
+import xgboost as xgb
+from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
+from sklearn.model_selection import StratifiedKFold
+from sklearn.svm import SVC
 
+# https://dacon.io/competitions/official/236068/overview/description
+
+import pandas as pd
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from keras.callbacks import EarlyStopping
+
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import StratifiedKFold
+from sklearn.svm import SVC
 import numpy as np
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
@@ -18,18 +37,35 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 
-#1. 데이터
-x, y = load_breast_cancer(return_X_y=True)
-random_state = 777
+# 데이터 구성
+train = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\train.csv", index_col=[0, 1, 2])
+test = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\test.csv", index_col= [0, 1, 2])
+submission = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\sample_submission.csv", index_col=[0])
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+
+train['Geography'] = le.fit_transform(train['Geography'])
+train['Gender'] = le.fit_transform(train['Gender'])
+
+test['Geography'] = le.fit_transform(test['Geography'])
+test['Gender'] = le.fit_transform(test['Gender'])
+
+x = train.drop(['Exited'], axis = 1)
+y = train['Exited']
+
+from sklearn.preprocessing import MinMaxScaler
+scalar=MinMaxScaler()
+x[:] = scalar.fit_transform(x[:])
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-                                                    test_size=0.2, random_state=777, stratify=y)
-
-mms = MinMaxScaler()
-x_train = mms.fit_transform(x_train)
-x_test  = mms.transform(x_test)
+                                                    test_size=0.2, 
+                                                    random_state=777, 
+                                                    stratify=y
+                                                    )
 
 #2. 모델
+from catboost import CatBoostClassifier
 bayesian_params = {
     'learning_rate':(0.001, 0.1),
     'max_depth':(3, 10),
@@ -88,6 +124,3 @@ et = time.time()
 
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
-
-# {'target': 1.0, 'params': {'colsample_bytree': 0.5, 'learning_rate': 0.1, 'max_bin': 17.21554995335185, 'max_depth': 10.0, 'min_child_samples': 81.58207064959846, 'min_child_weight': 4.906761394476327, 'num_leaves': 24.0, 'reg_alpha': 7.2786660771341705, 'reg_lambda': 4.769054926346684, 'subsample': 0.5}}
-# 1000 걸린 시간 2483.08

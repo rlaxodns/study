@@ -1,14 +1,5 @@
-import pandas as pd
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
-import xgboost as xgb
 import numpy as np
-import joblib
-
-from catboost import CatBoostClassifier, CatBoostRegressor
-from imblearn.over_sampling import SMOTE
-
-import numpy as np
-from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from xgboost import XGBClassifier
@@ -19,7 +10,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 #1. 데이터
-x, y = load_breast_cancer(return_X_y=True)
+x, y = load_wine(return_X_y=True)
 random_state = 777
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
@@ -29,7 +20,9 @@ mms = MinMaxScaler()
 x_train = mms.fit_transform(x_train)
 x_test  = mms.transform(x_test)
 
+
 #2. 모델
+from catboost import CatBoostClassifier
 bayesian_params = {
     'learning_rate':(0.001, 0.1),
     'max_depth':(3, 10),
@@ -88,6 +81,3 @@ et = time.time()
 
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
-
-# {'target': 1.0, 'params': {'colsample_bytree': 0.5, 'learning_rate': 0.1, 'max_bin': 17.21554995335185, 'max_depth': 10.0, 'min_child_samples': 81.58207064959846, 'min_child_weight': 4.906761394476327, 'num_leaves': 24.0, 'reg_alpha': 7.2786660771341705, 'reg_lambda': 4.769054926346684, 'subsample': 0.5}}
-# 1000 걸린 시간 2483.08
