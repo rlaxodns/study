@@ -1,33 +1,26 @@
-# train['종가'] = train['종가'].str.replace(',', '')
-# https://www.kaggle.com/c/playground-series-s4e1/data
 import pandas as pd
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score, accuracy_score
 from keras.callbacks import EarlyStopping
-
-import xgboost as xgb
-from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
-from sklearn.model_selection import StratifiedKFold
-from sklearn.svm import SVC
-
-# https://dacon.io/competitions/official/236068/overview/description
-
-import pandas as pd
-import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from keras.callbacks import EarlyStopping
+from sklearn.preprocessing import LabelEncoder
 
+import tensorflow as tf
+import random as rn
+rn.seed(6265)
+tf.random.set_seed(6265)
+np.random.seed(6265)
+
+import xgboost as xgb
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
+
+
 import numpy as np
-from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from xgboost import XGBClassifier
@@ -38,25 +31,16 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # 데이터 구성
-train = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\train.csv", index_col=[0, 1, 2])
-test = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\test.csv", index_col= [0, 1, 2])
-submission = pd.read_csv("C:\\ai5\\_data\\kaggle\\bank\\sample_submission.csv", index_col=[0])
+path = "C:\\ai5\\_data\\kaggle\\otto-group-product-classification-challenge\\"
+train = pd.read_csv(path + "train.csv", index_col=0)
+test = pd.read_csv(path + "test.csv", index_col=0)
+sub = pd.read_csv(path + "sampleSubmission.csv", index_col=0, )
 
-from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
+train["target"] = le.fit_transform(train["target"])
 
-train['Geography'] = le.fit_transform(train['Geography'])
-train['Gender'] = le.fit_transform(train['Gender'])
-
-test['Geography'] = le.fit_transform(test['Geography'])
-test['Gender'] = le.fit_transform(test['Gender'])
-
-x = train.drop(['Exited'], axis = 1)
-y = train['Exited']
-
-from sklearn.preprocessing import MinMaxScaler
-scalar=MinMaxScaler()
-x[:] = scalar.fit_transform(x[:])
+x = train.drop(['target'], axis=1)
+y = train['target']
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
                                                     test_size=0.2, 
@@ -121,5 +105,7 @@ et = time.time()
 print(bay.max)
 print(n_iter, "걸린 시간", round(et-st, 2))
 
-# {'target': 0.7633587786259542, 'params': {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_bin': 9.0, 'max_depth': 7.976107195017054, 'min_child_samples': 168.70418755003092, 'min_child_weight': 4.594506126237456, 'num_leaves': 26.927482360078834, 'reg_alpha': 1.2300039661954223, 'reg_lambda': 1.2266214947681264, 'subsample': 1.0}}
-# 500 걸린 시간 268.21
+"""
+{'target': 0.8177117000646412, 'params': {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_bin': 9.0, 'max_depth': 10.0, 'min_child_samples': 107.72217612254735, 'min_child_weight': 1.0, 'num_leaves': 40.0, 'reg_alpha': 1.2050541054700847, 'reg_lambda': -0.001, 'subsample': 1.0}}
+100 걸린 시간 194.18
+"""
