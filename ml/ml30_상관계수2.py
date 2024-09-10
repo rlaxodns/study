@@ -1,11 +1,11 @@
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_breast_cancer
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from xgboost import XGBClassifier
 import pandas as pd
 
 #1. 데이터
-dataset = load_iris()
+dataset = load_breast_cancer()
 x = dataset.data
 y = dataset.target
 # print(x.shape, y.shape) #(150, 4) (150,)
